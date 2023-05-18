@@ -13,11 +13,10 @@ async def add_questions(db: database, questions_num: int):
     """
     ## Добавление списка вопросов в базу данных.
     ### Записываются только уникальные вопросы.
-    ### Минимальное количество запросов к api и к базе данных.
     ### Возвращается последний записанный в базу вопрос или None если его нет.
     """
     last_question = await get_last_question(db)
     questions = await get_unique_questions(db, questions_num)
     questions = await bulk_preparation(questions)
     await bulk_create(db, questions)
-    return last_question if last_question else None
+    return last_question
